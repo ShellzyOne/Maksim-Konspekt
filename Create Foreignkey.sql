@@ -49,3 +49,32 @@ DROP Database TARpv23
 --tabelirida kustutamine
 select * from opilane;
 DELETE FROM opilane WHERE opilaneId=4;
+
+
+
+CREATE TABLE opetaja(
+opetajaId int Primary Key identity(1,1),
+eesnimi varchar(25),
+ruum int)
+
+SELECT * FROM opetaja;
+
+
+INSERT INTO opetaja(eesnimi, ruum)
+VALUES('Kaja', '201'),
+('Jüri', '202')
+
+
+
+CREATE TABLE opetamine(
+    opetamineId int PRIMARY KEY IDENTITY(1,1),
+    opetajaId int,
+    oppeaine varchar(30),
+    maht int
+);
+
+
+INSERT INTO opetamine(opetajaId,oppeaime, maht)
+Values (1, Matemaatika', '120')
+
+SELECT * FROM opetamine;
