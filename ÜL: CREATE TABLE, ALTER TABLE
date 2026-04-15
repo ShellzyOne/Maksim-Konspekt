@@ -1,0 +1,51 @@
+create database BossiBaas;
+use BossiBaas;
+
+--Loome uue  Category (idCategory, Category_Name)
+CREATE TABLE Catergory(
+idCategory int Primary Key identity(1,1), --kui naeme ID siis alati primary key
+Category_Name varchar(25) UNIQUE)
+
+
+INSERT INTO Catergory
+VALUES ('Auto'), ('Jook'), ('Toit')
+SELECT * FROM Catergory;
+
+--Loome uues Producti (Product (idProduct, Name, IdCategory)
+CREATE TABLE Product(
+idProduct int Primary Key identity(1,1),
+Name varchar(25),
+idCategory int, 
+Foreign Key(idCategory) References Catergory(idCategory),
+Price money)
+
+INSERT INTO Product
+Values ('Juustuburger', 3, 2.0)
+Select * from Product;
+
+--Loome uue Sale (idSALE, idProduct, idCustomer, Count_pr, Date_of_sale)
+CREATE TABLE Sale(
+idSale int Primary key identity(1,1),
+idProduct int,
+Foreign Key (idProduct)References Product(idProduct),
+idCustomer int, 
+count_pr int,
+date_of_sale date)
+
+-- Lisa tabel custotmers (idCustomer, Name, Contact) ja seome
+CREATE TABLE Customer(
+idCustomer int Primary Key identity (1,1),
+Name varchar(25) UNIQUE,
+Contact varchar(100))
+
+ALTER TABLE SALE ADD Foreign Key (idCustomer) References Customer (idCustomer)
+INSERT INTO Customer
+VALUES ('Kevin', '+586756'),('Robin', '+345678')
+
+SELECT * FROM Customer;
+Select * from Product;
+
+INSERT INTO Sale
+VALUES (1, 1, 5, '2026-04-15')
+
+Select * from sale;
