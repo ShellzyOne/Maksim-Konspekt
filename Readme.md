@@ -23,4 +23,43 @@ Andmebaasidega seotud sql kood ja konspektid
   -  date. time, datetime - kuupäeva
  
   ## Piirangud
-  1. 
+  1. primary key
+  2. foreign key
+  3. unique
+  4. not null
+  5. check
+```
+
+  ## Tabelivahelised seosed
+  - üks - ühele (nt mees --naine)
+  - üks - mitmele (õpilane käib erinevates õppeainetes)
+  - mitu - mitmele (nt õpilane - õpetaja)
+```
+  ## Stored procedure
+Salvestatud protseduurid - sama mis on funktsioonid programeerimises - mingi tegevus(ed), mida saab automaatselt teha(INSERT, SELECT, UPDATE, DELETE)
+```sql
+create procedure lisaKategooria
+@nimi varchar(15)
+AS
+BEGIN
+	INSERT INTO categories
+	VALUES (@nimi);
+	SELECT * FROM categories;
+END
+
+--kutse
+EXEC lisaKategooria 'test';
+
+--proceduur, mis kustutab tabelist id järgi
+Create procedure kustutaIdjargi
+@id int
+AS
+BEGIN
+	SELECT * FROM categories
+	DELETE FROM categories WHERE category_id=@id;
+	SELECT * FROM categories;
+END
+--kutse
+EXEC kustutaIdJargi 6;
+
+```
