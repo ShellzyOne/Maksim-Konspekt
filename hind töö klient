@@ -1,0 +1,183 @@
+create database Maksim1
+use Maksim1;
+
+
+--klient tabeli lisamine
+create table klient(
+klient_id int primary key identity(1,1),
+klient_nimi varchar(25) UNIQUE,
+klient_linn varchar(25),
+klient_vanus int,
+klient_raha money)
+
+select * from klient
+
+--lisan tabelisse info
+insert into klient
+values ('Tont', 'Haapsalu', 21, 50)
+
+
+--LISA KLIENT
+-- protseduur, mis lisab uue kliendi (nimi, linn, vanus,saldo)
+CREATE PROCEDURE lisaKlient
+    @nimi varchar(25),
+    @linn varchar(25),
+    @vanus int,
+    @raha money
+AS
+BEGIN
+    INSERT INTO klient(klient_nimi, klient_linn, klient_vanus, klient_raha)
+    VALUES (@nimi, @linn, @vanus, @raha);
+
+    SELECT * FROM klient;
+END;
+
+--lisab selle juba
+EXEC lisaKlient 'Kevin', 'Narva', 17, 150
+
+
+
+--SALDO MIN/MAX
+--protseduur, mis leiab väiksema ja suurima saldo(OUTPUT parameetrid).
+CREATE PROCEDURE MinMaxRaha
+    @minRaha MONEY OUTPUT,
+    @maxRaha MONEY OUTPUT
+AS
+BEGIN
+    SELECT 
+        @minRaha = MIN(klient_raha),
+        @maxRaha = MAX(klient_raha)
+    FROM klient;
+END;
+
+
+
+--kasutamine
+DECLARE @minRaha MONEY, @maxRaha MONEY;
+
+EXEC MinMaxRaha @minRaha OUTPUT, @maxRaha OUTPUT;
+
+PRINT 'Min hind = ' + CONVERT(varchar, @minRaha);
+PRINT 'Max hind = ' + CONVERT(varchar, @maxRaha);
+
+
+--TINGIMUSLAUSE KASUTAMINE (CASE/IF)
+--Protseduur või päring, mis kuvab iga kliendi kohta lisaveeru:
+--kui saldo on üle 100 → "Hea klient"
+--muidu → "Tavaklient"
+
+CREATE PROCEDURE kliendiraha
+AS
+BEGIN
+    SELECT 
+        klient_nimi,
+        klient_raha,
+        CASE 
+            WHEN klient_raha > 100 THEN 'Hea klient'
+            ELSE 'Tavaklient'
+        END AS hinnaKategooria
+    FROM klient;
+END;
+EXEC kliendiraha
+
+
+--KUSTUTA KLIENT
+--protseduur, mis kustutab kliendi ID järgi
+
+Create procedure kustutaIdjargi
+@id int
+AS
+BEGIN
+	SELECT * FROM klient
+	DELETE FROM klient WHERE klient_id=@id;
+	SELECT * FROM klient;
+END
+--kutse
+EXEC kustutaIdJargi 5;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--VEERU HALDUS
+--Protseduur mis lisab või kustutab veeru
+CREATE PROCEDURE muudatus
+    @tegevus varchar(10),
+    @tabelinimi varchar(25),
+    @veerunimi varchar(25),
+    @tyyp varchar(25) = NULL
+AS
+BEGIN
+    DECLARE @sqltegevus varchar(max);
+
+    SET @sqltegevus = CASE 
+        WHEN @tegevus = 'add' THEN 
+            CONCAT('ALTER TABLE ', @tabelinimi, ' ADD ', @veerunimi, ' ', @tyyp)
+
+        WHEN @tegevus = 'drop' THEN 
+            CONCAT('ALTER TABLE ', @tabelinimi, ' DROP COLUMN ', @veerunimi)
+    END;
+
+    PRINT @sqltegevus;
+    EXEC (@sqltegevus);
+END;
+
+
+--käivitamine
+--veeru lisamine
+EXEC muudatus
+	@tegevus='add',
+	@tabelinimi='klient',
+	@veerunimi='test',
+	@tyyp='int';
+	Select * from klient;
+
+--veeru kustutamine
+EXEC muudatus
+	@tegevus='drop',
+	@tabelinimi='klient',
+	@veerunimi='test';
+
+
+
+create procedure uuendaKlient
+	@id int,
+	@uusnimi varchar(25),
+	@uuslinn varchar(25),
+	@vanus int
+	AS
+	Begin
+	Select * from klient;
+	Update klient set klient_nimi = @uusnimi, klient_linn = @uuslinn, klient_vanus = @vanus
+	Where klient_id = @id;
+	Select * from klient;
+END;
+
+exec uuendaKlient 1, 'Maksim2', 'Tallinn2', 21; 
+
+
+--otsing
+--protseduur mis otsib kõik kategooriad sisestatud 1 tähe
+Create procedure otsing1taht
+@taht char(1)
+AS
+Begin
+	Select klient_nimi from klient
+	Where klient_nimi like @taht + '%';
+end
+
+--kasutamine
+Select * from klient
+exec otsing1taht 'M'
