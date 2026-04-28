@@ -1,0 +1,14 @@
+create procedure uuendaKlient
+	@id int,
+	@uusnimi varchar(25),
+	@uuslinn varchar(25),
+	@vanus int
+	AS
+	Begin
+	Select * from klient;
+	Update klient set klient_nimi = @uusnimi, klient_linn = @uuslinn, klient_vanus = @vanus
+	Where klient_id = @id;
+	Select * from klient;
+END;
+
+exec uuendaKlient 1, 'Maksim2', 'Tallinn2', 21;
