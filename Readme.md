@@ -8,7 +8,225 @@ Andmebaasidega seotud sql kood ja konspektid
 - SQL - structured Query Language - struktureeritud päringukeel
 - DDL - Data Definition Language -andmebaasi struktuuri loomiseks - CREATE, ALTER
 - DML - Data Manipulation Language -andmete lisamine ja uuendamine tabelis - INSERT, UPDATE, DELETE
+# Põhimõisted
 
+## Andmebaas (Database)
+
+ Tähendus: Korraldatud andmete kogum, mida hoitakse arvutis.
+ Kasutus: Andmete säilitamiseks, haldamiseks ja töötlemiseks.
+
+ Näide: ettevõtte klientide andmebaas.
+
+## Andmebaasihaldussüsteem (DBMS)
+
+Tähendus: Tarkvara, mis võimaldab andmebaase luua, hallata ja kasutada.
+  Kasutus: Andmete lisamiseks, muutmiseks, kustutamiseks ja pärimiseks.
+
+ Näited:
+
+- MySQL
+- PostgreSQL
+- Microsoft SQL Server
+- 3. Tabel (Table)
+
+Tähendus: Andmete hoidmise põhistruktuur andmebaasis.
+Kasutus: Sarnaste andmete organiseerimiseks.
+
+Näide: tabel "Õpilased".
+```sql
+ID	Nimi	Vanus
+1	Mari	18
+4. Veerg (Atribuut, Column)
+```
+Tähendus: Tabeli omadus või tunnus.
+Kasutus: Määrab, millist tüüpi andmeid tabel sisaldab.
+
+Näide:
+
+- ID
+- Nimi
+- Vanus
+## Rida (Kirje, Record)
+
+Tähendus: Üks konkreetne andmekogum tabelis.
+Kasutus: Esindab ühte objekti või sündmust.
+
+Näide:
+| 1 | Mari | 18 |
+
+See terve rida on üks kirje.
+
+## Primaarvõti (Primary Key)
+
+Tähendus: Veerg või veergude kombinatsioon, mis identifitseerib iga kirje unikaalselt.
+Kasutus: Väldib duplikaatkirjeid.
+
+Näide:
+
+- ID = 1
+- ID = 2
+
+ID on primaarvõti.
+
+## Võõrvõti (Foreign Key)
+
+Tähendus: Viitab teise tabeli primaarvõtmele.
+Kasutus: Seob omavahel erinevaid tabeleid.
+
+Näide:
+
+- Kliendid(ID)
+- Tellimused(KlientID)
+
+KlientID on võõrvõti.
+
+## Indeks (Index)
+
+Tähendus: Andmestruktuur, mis kiirendab otsinguid.
+Kasutus: Suurte andmehulkade kiireks leidmiseks.
+
+Näide:
+```sql
+CREATE INDEX idx_nimi
+ON Kliendid(Nimi);
+```
+## Vaade (VIEW)
+
+Tähendus: Virtuaalne tabel, mis põhineb päringul.
+Kasutus: Lihtsustab keeruliste päringute kasutamist.
+
+Näide:
+
+- CREATE VIEW AktiivsedKliendid AS
+- SELECT * FROM Kliendid
+- WHERE Staatus='Aktiivne';
+## Päring (SELECT)
+
+Tähendus: Käsk andmete küsimiseks andmebaasist.
+Kasutus: Andmete vaatamiseks.
+
+Näide:
+
+- SELECT * FROM Kliendid;
+## Tingimus (WHERE)
+
+Tähendus: Filtreerib päringu tulemusi.
+Kasutus: Kuvab ainult vajalikud kirjed.
+
+Näide:
+
+- SELECT * FROM Kliendid
+- WHERE Linn='Tallinn';
+## Sorteerimine (ORDER BY)
+
+Tähendus: Korraldab tulemused kindlas järjekorras.
+Kasutus: Andmete järjestamiseks.
+
+Näide:
+
+- SELECT * FROM Kliendid
+- ORDER BY Nimi ASC;
+## Grupeerimine (GROUP BY)
+
+Tähendus: Koondab sama väärtusega kirjed gruppidesse.
+Kasutus: Statistika ja kokkuvõtete tegemiseks.
+
+Näide:
+
+- SELECT Linn, COUNT(*)
+- FROM Kliendid
+- GROUP BY Linn;
+## Liitmine (JOIN)
+
+Tähendus: Ühendab andmeid mitmest tabelist.
+Kasutus: Seotud andmete kuvamiseks.
+
+Näide:
+
+- SELECT Kliendid.Nimi, Tellimused.Summa
+- FROM Kliendid
+- JOIN Tellimused
+- ON Kliendid.ID = Tellimused.KlientID;
+## NULL väärtus
+
+Tähendus: Väärtus puudub või pole teada.
+Kasutus: Märgib puuduvaid andmeid.
+
+Näide:
+```sql
+Telefon = NULL
+```
+Telefoninumber pole teada.
+
+## Piirangud (Constraints)
+
+Tähendus: Reeglid andmete õigsuse tagamiseks.
+Kasutus: Vigaste andmete sisestamise vältimiseks.
+
+Levinud piirangud:
+
+- PRIMARY KEY
+- FOREIGN KEY
+- NOT NULL
+- UNIQUE
+- CHECK
+
+Näide:
+```sql
+Vanus INT CHECK (Vanus >= 0)
+```
+## Relatsioon (Relation)
+
+Tähendus: Seos andmebaasi objektide vahel; relatsioonilises andmebaasis tähendab tavaliselt tabelit.
+Kasutus: Andmete loogiliseks organiseerimiseks.
+
+Näide:
+- Klient ↔ Tellimus
+
+## Skeem (Schema)
+
+Tähendus: Andmebaasi struktuuri kirjeldus.
+Kasutus: Määrab tabelid, väljad, seosed ja piirangud.
+
+Näide:
+
+- Kliendid(ID, Nimi, Linn)
+- Tellimused(ID, KlientID, Summa)
+## Protseduur (Stored Procedure)
+
+Tähendus: Andmebaasi salvestatud SQL-käskude kogum.
+Kasutus: Automatiseerib korduvaid tegevusi.
+
+Näide:
+```sql
+CREATE PROCEDURE LisaKlient
+AS
+INSERT INTO Kliendid ...
+```
+20. Trigger
+
+Tähendus: Automaatne tegevus, mis käivitub sündmuse korral.
+Kasutus: Kontrollide ja automaatsete toimingute tegemiseks.
+
+Näide:
+```sql
+AFTER INSERT
+```
+Käivitub pärast uue kirje lisamist.
+
+21. Kasutaja ja õigused (GRANT, REVOKE)
+
+Tähendus: Määravad, mida kasutajad andmebaasis teha võivad.
+Kasutus: Turvalisuse tagamiseks.
+```sql
+GRANT – annab õigused:
+```sql
+GRANT SELECT ON Kliendid TO Mart;
+```sql
+REVOKE – eemaldab õigused:
+```sql
+REVOKE SELECT ON Kliendid FROM Mart;
+```
 ## Sisukord
   - [Andmebaasihaldusüsteemid](#andmebaasihaldusüsteemid)
   - [Põhimõisted](#põhimõisted)
