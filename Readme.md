@@ -54,6 +54,8 @@ Andmebaasidega seotud sql kood ja konspektid
   ## Tabelivahelised seosed
   - üks - ühele (nt mees --naine)
   - üks - mitmele (õpilane käib erinevates õppeainetes)
+<img width="686" height="301" alt="{F3DF641B-EBE2-48DC-AB3E-BF8B57B6FBCF}" src="https://github.com/user-attachments/assets/f20d90ca-a51f-4245-8441-28db4c6b39fb" />
+
   - mitu - mitmele (nt õpilane - õpetaja)
 ```
   ## Stored procedure
