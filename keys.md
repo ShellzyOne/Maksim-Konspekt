@@ -42,7 +42,6 @@ CREATE TABLE Klass (
     klass_id INT PRIMARY KEY,
     nimetus VARCHAR(20)
 );
-
 CREATE TABLE Opilane (
     opilane_id INT PRIMARY KEY,
     nimi VARCHAR(50),
