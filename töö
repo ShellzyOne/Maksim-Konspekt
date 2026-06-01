@@ -1,0 +1,187 @@
+create database töö
+use töö
+
+--tabel klient
+CREATE TABLE klient(
+klient_id INT PRIMARY KEY IDENTITY(1,1),
+eesnimi VARCHAR(50),
+perenimi VARCHAR(50));
+
+insert into klient
+values('Ringo', 'Kirnmann')
+
+select * from klient
+
+--tabel toode
+CREATE TABLE Toode(
+toode_id INT PRIMARY KEY IDENTITY(1,1),
+tootenimi VARCHAR(100),
+ühikuhind NUMERIC,
+ühik VARCHAR(2));
+
+insert into Toode
+values('burks', 5, '$')
+
+select * from Toode
+
+--tabel ost
+CREATE TABLE Ost(
+ost_id INT PRIMARY KEY IDENTITY(1,1),
+kliendi_id INT,
+toote_id INT,
+FOREIGN KEY (kliendi_id) REFERENCES klient(klient_id),
+FOREIGN KEY (toote_id) REFERENCES Toode(toode_id));
+
+select * from Ost
+
+create table logi(
+logi_id int primary key identity(1,1),
+kasutaja varchar(100),
+kuupaev DATETIME,
+sisestatudAndmed varchar(1000));
+
+select * from logi
+
+CREATE TRIGGER andmeteLisamine
+ON Ost -- tabel, mida triger jälgib
+FOR INSERT
+AS
+INSERT INTO logi(kasutaja, kuupaev, sisestatudAndmed)
+SELECT 
+SYSTEM_USER, --siselogitud user
+GETDATE(), 
+CONCAT('lisatud: ',inserted.kliendi_id,', ',
+inserted.toote_id)
+FROM inserted;
+
+--kontroll
+insert into Ost
+values(3, 3)
+
+select * from Ost
+select * from logi
+
+
+CREATE TRIGGER andmeUuendamine
+ON Ost --tabelinimi, mis on vaja jälgida
+FOR UPDATE
+AS
+INSERT INTO logi(kasutaja, kuupaev, sisestatudAndmed)
+SELECT
+SUSER_NAME(),
+GETDATE(),  
+CONCAT('vanad andmed  -kliendi id: ', deleted.kliendi_id,
+', toote_id: ', deleted.toote_id,
+'uued andmed -kliendi_id: ', inserted.kliendi_id,
+', toote_id: ', inserted.toote_id) 
+FROM deleted
+INNER JOIN inserted
+ON deleted.ost_id=inserted.ost_id;
+
+UPDATE Ost SET toote_id=3
+WHERE kliendi_id=1;
+
+select * from logi
+
+
+
+
+--protseduurid
+--protseduur mis väljastab kõik nimed tabelist klient.
+create procedure getklient
+as begin
+	select eesnimi, perenimi from klient
+end
+
+-- nüüd saab kasutada selle nimelist sp-d
+getklient
+exec getklient
+execute getklient
+
+
+-- näitab nimi sisestatud id järgi
+create proc spGetNameById1
+@klient_id int,
+@eesnimi nvarchar(50) output
+as begin
+	select @eesnimi = eesnimi from klient where klient_id = @klient_id
+end
+--proc kutse
+declare @eesnimi nvarchar(50)
+execute spGetNameById1 2, @eesnimi output
+print 'Name of the employee = ' + @eesnimi
+
+sp_help spGetNameById1
+
+
+--protseduur mis näitab kõik ostud koos kliendi nime ja toote nimetusega
+CREATE PROCEDURE spKuvaKliendiOstud
+    @klient_id INT
+AS
+BEGIN
+    SELECT
+        eesnimi,
+        perenimi,
+        tootenimi,
+        ühikuhind
+    FROM Ost
+    INNER JOIN klient
+        ON kliendi_id = klient_id
+    INNER JOIN Toode 
+        ON toote_id = toode_id
+    WHERE klient_id = @klient_id;
+END;
+
+
+EXEC spKuvaKliendiOstud 2;
+
+
+--vaade tegemine, näitab kasutaja tema perekonnanime järgi
+CREATE VIEW klientvaade2
+AS
+Select eesnimi, perenimi, toote_id
+FROM klient inner join Ost on klient.klient_id=Ost.kliendi_id
+WHERE perenimi LIKE 'Allik';
+
+--view kasutamine:
+Select * from klientvaade2;
+
+
+-- 2 view mis kuvab kõik kliente koos nende ostudega.
+CREATE VIEW vwKliendiOstud3
+AS
+SELECT
+    klient_id,
+    eesnimi,
+    perenimi,
+    tootenimi,
+    ühikuhind
+FROM Ost
+INNER JOIN klient 
+    ON kliendi_id = klient_id
+INNER JOIN Toode
+    ON toote_id = toode_id;
+
+
+SELECT * FROM vwKliendiOstud3;
+
+
+
+--12 ulesanne enda andmebaasi tegevus
+
+--protseduur, mis kustutab kliendi ID järgi
+
+Create procedure kustutaIdjargi1
+@klient_id int
+AS
+BEGIN
+	SELECT * FROM klient
+	DELETE FROM klient WHERE klient_id=@klient_id;
+	SELECT * FROM klient;
+END
+--kutse
+EXEC kustutaIdJargi1 4;
+
+select * from Ost
+
+deny select on logi to klientNimi
