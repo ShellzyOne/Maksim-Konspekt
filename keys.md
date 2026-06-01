@@ -1,3 +1,7 @@
+Andmebaasidega seotud sql kood ja konspektid
+
+[Select laused](select.md) | [Kasutaja loomine XAMPP-is](kasutaja.md) | [Kasutaja loomine SQL Server](kasutaja.md) | [Triggerid](trigerid.md) | [Kodutöö - Keys](keys.md)
+
 ## Primary Key (Primaarvõti)
 Definitsioon:
 
