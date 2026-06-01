@@ -208,3 +208,7 @@ opilane_id = Primary Key
 email = Alternate Key
 
 <img width="343" height="379" alt="{986AFAA2-A97A-4B4B-B890-C0EE2F8DA1B4}" src="https://github.com/user-attachments/assets/cf9bc475-9270-4411-8f78-71f028a87cf0" />
+
+
+## Kasutatud allikas:
+https://chatgpt.com/
