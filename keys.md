@@ -37,7 +37,7 @@ Milleks kasutatakse?
 - Ei pea olema unikaalne.
 - Viitab alati teisele tabelile.
 Näide:
-```
+```sql
 CREATE TABLE Klass (
     klass_id INT PRIMARY KEY,
     nimetus VARCHAR(20)
@@ -64,7 +64,7 @@ Milleks kasutatakse?
 - Tabelis võib olla mitu UNIQUE võtit.
 - Tavaliselt võib sisaldada NULL-väärtust.
 Näide:
-```
+```sql
 CREATE TABLE Kasutaja (
     kasutaja_id INT PRIMARY KEY,
     email VARCHAR(100) UNIQUE
@@ -82,7 +82,7 @@ Milleks kasutatakse?
 - Erinevus teistest võtmetest
 - Koosneb ainult ühest veerust.
 Näide:
-```
+```sql
 CREATE TABLE Toode (
     toode_id INT PRIMARY KEY,
     nimetus VARCHAR(100)
@@ -101,7 +101,7 @@ Milleks kasutatakse?
 - Erinevus teistest võtmetest
 - Koosneb mitmest veerust.
 Näide:
-```
+```sql
 CREATE TABLE OpetajaAine (
     opetaja_id INT,
     aine_id INT,
@@ -122,7 +122,7 @@ Milleks kasutatakse?
 - Composite Key rõhutab mitut veergu.
 - Compound Key sisaldab sageli võõrvõtmeid.
 Näide:
-```
+```sql
 CREATE TABLE Tellimus (
     tellimus_id INT PRIMARY KEY
 );
@@ -170,6 +170,7 @@ Milleks kasutatakse?
 - Erinevus teistest võtmetest
 - Ei sisalda üleliigseid atribuute.
 Näide:
+sql
 CREATE TABLE Opilane (
     opilane_id INT,
     email VARCHAR(100),
@@ -194,6 +195,7 @@ Milleks kasutatakse?
 - Erinevus teistest võtmetest
 - On kandidaatvõti, kuid mitte Primary Key.
 Näide:
+sql
 CREATE TABLE Opilane (
     opilane_id INT PRIMARY KEY,
     email VARCHAR(100) UNIQUE,
