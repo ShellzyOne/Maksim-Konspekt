@@ -10,11 +10,16 @@ Andmebaasidega seotud sql kood ja konspektid
 - DML - Data Manipulation Language -andmete lisamine ja uuendamine tabelis - INSERT, UPDATE, DELETE
 
 ## Sisukord
+  - [Andmebaasihaldusüsteemid](#andmebaasihaldusüsteemid)
+  - [Põhimõisted](#põhimõisted)
+  - [Andmetüübid](#andmetüübid)
+  - [Piirangud](#piirangud)
+  - [Tabelivahelised Seosed](#tabelivahelised-seosed)
 
 
 
 
-# AndmebaasidLogitpe24
+# Andmebaasihaldusüsteemid
 Andmebaasidega seotud sql kood ja konspektid
 
 
