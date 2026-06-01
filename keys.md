@@ -212,3 +212,4 @@ email = Alternate Key
 
 ## Kasutatud allikas:
 https://chatgpt.com/
+kasutad oli sisselogimata ai-ga (tasuta versioon)
