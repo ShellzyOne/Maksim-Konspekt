@@ -1,3 +1,19 @@
+# Andmebasaside Maksim Bogatšov portfoolio ||| LOGITpe24
+
+Andmebaasidega seotud sql kood ja konspektid
+
+[Select laused](select.md) | [Kasutaja loomine XAMPP-is](kasutajaXampp.md) | [Kasutaja loomine SQL Server](kasutaja.md) | [Triggerid](trigerid.md) | [Kodutöö - Keys](keys.md)
+
+
+- SQL - structured Query Language - struktureeritud päringukeel
+- DDL - Data Definition Language -andmebaasi struktuuri loomiseks - CREATE, ALTER
+- DML - Data Manipulation Language -andmete lisamine ja uuendamine tabelis - INSERT, UPDATE, DELETE
+
+## Sisukord
+
+
+
+
 # AndmebaasidLogitpe24
 Andmebaasidega seotud sql kood ja konspektid
 
