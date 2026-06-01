@@ -1,3 +1,10 @@
+
+Andmebaasidega seotud sql kood ja konspektid
+
+[Select laused](select.md) | [Kasutaja loomine XAMPP-is](kasutaja.md) | [Kasutaja loomine SQL Server](kasutaja.md) | [Triggerid](trigerid.md) | [Kodutöö - Keys](keys.md)
+
+
+
 ## SQL Server – Kasutajate autentimine ja õiguste haldamine
 Mis on autentimine SQL Serveris?
  ### Autentimine tähendab kasutaja tuvastamist ehk kontrollimist, kas kasutajal on õigus SQL Serverisse sisse logida.
