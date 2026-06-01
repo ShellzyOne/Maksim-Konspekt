@@ -1,3 +1,8 @@
+Andmebaasidega seotud sql kood ja konspektid
+
+[Select laused](select.md) | [Kasutaja loomine XAMPP-is](kasutaja.md) | [Kasutaja loomine SQL Server](kasutaja.md) | [Triggerid](trigerid.md) | [Kodutöö - Keys](keys.md)
+
+
 <img width="942" height="501" alt="{8734B081-4612-4419-8CCB-5C58874B9D6C}" src="https://github.com/user-attachments/assets/e6315cd3-8676-4468-9bf7-6493ebf6e7aa" />
 
 ```sql
